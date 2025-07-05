@@ -57,14 +57,6 @@ GET {host}/actuator/touchstone/groups/{namespace}/{testName}/{key}
     </bean>
 </beans>
 ```
-#### 4.springboot项目配置
-```xml
-<dependency>
-    <groupId>com.ppwx.diting</groupId>
-    <artifactId>touchstone-starter</artifactId>
-    <version>{last.version}</version>
-</dependency>
-```
 ```properties
 # 命名空间
 touchstone.namespaces=test
