@@ -1,0 +1,12 @@
+CREATE TABLE `t_touchstone_group` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `namespace` varchar(20) NOT NULL COMMENT '命名空间',
+  `test_name` varchar(50) NOT NULL COMMENT '实验计划名称',
+  `test_groups` varchar(512) DEFAULT NULL COMMENT '实验分组列表',
+  `whitelist` varchar(255) DEFAULT NULL COMMENT '白名单配置',
+  `rnd_seed` int(10) DEFAULT NULL COMMENT '随机数',
+  `create_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uidx_namespace_testname` (`namespace`,`test_name`) USING BTREE COMMENT '命名空间&计划名称'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='试金石实验计划分组信息';
