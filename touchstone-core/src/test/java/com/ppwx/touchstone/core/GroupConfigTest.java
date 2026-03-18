@@ -18,11 +18,12 @@
 package com.ppwx.touchstone.core;
 
 import com.ppwx.touchstone.core.domain.GroupConfig;
-import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -31,23 +32,64 @@ import java.util.Collections;
  * @date 2023/10/30 17:11
  * @since 1.0.0
  */
-@Slf4j
 public class GroupConfigTest {
 
     @Test
-    public void testParseGroupConfigWorks() {
-        GroupConfig config = new GroupConfig();
-        config.setTestGroups("0|A|10|0,1,2,3,4,5,6,7,8,9;");
-        config.parseGroupConfig();
-        log.info("groups:{}", config.getGroupBeans());
-    }
+    public void testNormalizeThenParse_roundTrip() {
+        // given
+        Group groupA = new Group("A", 2, Arrays.asList(0, 1));
+        groupA.setWhitelist(Arrays.asList("u1", "u2"));
+        Group groupB = new Group("B", 1, Collections.singletonList(2));
 
-    @Test
-    public void testNormalizeGroupWorks() {
         GroupConfig config = new GroupConfig();
-        config.setGroupBeans(Collections.singletonList(new Group("A", 10, Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9))));
+        config.setNamespace("ns");
+        config.setTestName("t1");
+        config.setGroupBeans(Arrays.asList(groupA, groupB));
+
+        // when
         config.normalizeGroup();
-        log.info("groupConfigs:{}", config.getTestGroups());
+        String testGroups = config.getTestGroups();
+        String whitelist = config.getWhitelist();
+
+        GroupConfig parsed = new GroupConfig();
+        parsed.setTestGroups(testGroups);
+        parsed.setWhitelist(whitelist);
+        parsed.parseGroupConfig();
+
+        // then
+        List<Group> groups = parsed.getGroupBeans();
+        Assert.assertNotNull(groups);
+        Assert.assertEquals(2, groups.size());
+
+        Group parsedA = groups.stream()
+                .filter(g -> "A".equals(g.getMetaInfo().getGroupNo()))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("missing group A"));
+        Assert.assertEquals(2, parsedA.getMetaInfo().getRate());
+        Assert.assertEquals(Arrays.asList(0, 1), parsedA.getAssignedBuckets());
+        Assert.assertEquals(Arrays.asList("u1", "u2"), parsedA.getWhitelist());
+
+        Group parsedB = groups.stream()
+                .filter(g -> "B".equals(g.getMetaInfo().getGroupNo()))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("missing group B"));
+        Assert.assertEquals(1, parsedB.getMetaInfo().getRate());
+        Assert.assertEquals(Collections.singletonList(2), parsedB.getAssignedBuckets());
+        Assert.assertNull(parsedB.getWhitelist());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testNormalizeGroup_emptyGroups_throws() {
+        GroupConfig config = new GroupConfig();
+        config.setGroupBeans(Collections.emptyList());
+        config.normalizeGroup();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testParseGroupConfig_duplicateGroupNo_throws() {
+        GroupConfig config = new GroupConfig();
+        // A duplicated
+        config.setTestGroups("0|A|1|0;0|A|1|1;");
+        config.parseGroupConfig();
+    }
 }

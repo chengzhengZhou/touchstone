@@ -18,14 +18,10 @@
 package com.ppwx.touchstone.core;
 
 import com.ppwx.touchstone.core.domain.GroupConfig;
-import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -34,20 +30,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2023/10/27 14:24
  * @since 1.0.0
  */
-@Slf4j
 public class BaseSelectorTest {
 
     @Test
-    public void testBaseSelectorWorks() {
-        Group groupA = new Group("A", 30);
-        Group groupB = new Group("B", 60);
-        for (int i = 0; i < 90; i++) {
-            if (i < 30) {
-                groupA.assignBucket(i);
-            } else {
-                groupB.assignBucket(i);
-            }
-        }
+    public void testSelect_nullKey_returnsBucket0Group() {
+        Group groupA = new Group("A", 1, Arrays.asList(0));
+        Group groupB = new Group("B", 1, Arrays.asList(1));
+        GroupConfig config = new GroupConfig();
+        config.setTestName("测试1");
+        config.setGroupBeans(Arrays.asList(groupA, groupB));
+
+        BaseMemorySelector selector = new BaseMemorySelector();
+        selector.initWithConfig(config);
+
+        Assert.assertSame(groupA, selector.select(null));
+    }
+
+    @Test
+    public void testSelect_whitelistKey_returnsWhitelistedGroup() {
+        Group groupA = new Group("A", 1, Arrays.asList(0));
+        Group groupB = new Group("B", 1, Arrays.asList(1));
+        groupB.setWhitelist(Arrays.asList("user-1"));
 
         GroupConfig config = new GroupConfig();
         config.setTestName("测试1");
@@ -56,37 +59,32 @@ public class BaseSelectorTest {
         BaseMemorySelector selector = new BaseMemorySelector();
         selector.initWithConfig(config);
 
-        Map<Group, AtomicInteger> count = new HashMap<>(2);
-        count.put(groupA, new AtomicInteger(0));
-        count.put(groupB, new AtomicInteger(0));
-        count.put(null, new AtomicInteger());
-        for (int i = 0; i < 100; i++) {
-            count.get(selector.select(i)).incrementAndGet();
-        }
-        log.info("GroupA:{}", count.get(groupA));
-        log.info("GroupB:{}", count.get(groupB));
-        log.info("null:{}", count.get(null));
+        Assert.assertSame(groupB, selector.select("user-1"));
     }
 
     @Test
-    public void testRandomBucketWorks() {
-        Random rnd = new Random(1);
-        int size = 100;
-        int[] arr = new int[size];
-        for (int i = 0; i < size; i++) {
-            arr[i] = i;
-        }
+    public void testSelect_bucketKey_returnsExpectedGroup() {
+        Group groupA = new Group("A", 1, Arrays.asList(0));
+        Group groupB = new Group("B", 1, Arrays.asList(1));
 
-        // Shuffle array
-        for (int i = size; i > 1; i--) {
-            int a = i -1;
-            int b = rnd.nextInt(i);
-            int tmp = arr[a];
-            arr[a] = arr[b];
-            arr[b] = tmp;
-        }
+        GroupConfig config = new GroupConfig();
+        config.setTestName("测试1");
+        config.setGroupBeans(Arrays.asList(groupA, groupB));
 
-        Arrays.stream(arr).forEach(System.out::println);
+        BaseMemorySelector selector = new BaseMemorySelector();
+        selector.initWithConfig(config);
+
+        int keyForBucket1 = findIntKeyForBucket(1);
+        Assert.assertSame(groupB, selector.select(keyForBucket1));
     }
 
+    private static int findIntKeyForBucket(int bucket) {
+        for (int i = 0; i < 1_000_000; i++) {
+            if (BucketUtil.assignBucket(i) == bucket) {
+                return i;
+            }
+        }
+        Assert.fail("Unable to find key for bucket=" + bucket);
+        return -1;
+    }
 }
