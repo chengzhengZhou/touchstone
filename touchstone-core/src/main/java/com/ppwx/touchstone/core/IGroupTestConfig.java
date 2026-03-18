@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * 分组实验计划配置
  *
- * @author chengzhengZhou
  * @date 2023/10/26 15:49
  * @since 1.0.0
  */

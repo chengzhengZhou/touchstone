@@ -22,7 +22,6 @@ import org.springframework.context.ApplicationEvent;
 /**
  * 实验组资源更新事件
  *
- * @author chengzhengZhou
  * @date 2023/11/01 16:15
  * @since 1.0.0
  */

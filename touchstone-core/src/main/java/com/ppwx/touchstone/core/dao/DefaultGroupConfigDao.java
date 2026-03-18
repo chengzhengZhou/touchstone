@@ -30,7 +30,6 @@ import java.util.List;
 /**
  * 试金石元数据增删改实现
  *
- * @author chengzhengZhou
  * @date 2023/10/30 17:36
  * @since 1.0.0
  */

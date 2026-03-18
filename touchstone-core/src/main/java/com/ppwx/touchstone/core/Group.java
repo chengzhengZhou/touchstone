@@ -24,7 +24,6 @@ import java.util.List;
  *
  * 实验分组对象
  *
- * @author chengzhengZhou
  * @date 2023/10/26 13:42
  * @since 1.0.0
  */

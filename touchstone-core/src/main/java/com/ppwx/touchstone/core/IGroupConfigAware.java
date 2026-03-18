@@ -22,7 +22,6 @@ package com.ppwx.touchstone.core;
  * 项目一般同时存在多个实验计划
  * 定义该接口可便于{@link ISelector}容器能感知到分组配置的变更
  *
- * @author chengzhengZhou
  * @date 2023/10/26 15:41
  * @since 1.0.0
  */

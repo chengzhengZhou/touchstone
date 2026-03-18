@@ -21,7 +21,6 @@ package com.ppwx.touchstone.core;
  *
  * 试金石入口类
  *
- * @author chengzhengZhou
  * @date 2023/10/26 16:20
  * @since 1.0.0
  */

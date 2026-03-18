@@ -22,7 +22,6 @@ package com.ppwx.touchstone.core;
  * 实验组选择器注册类
  * 可用于动态注册和获取
  *
- * @author chengzhengZhou
  * @date 2023/10/31 13:52
  * @since 1.0.0
  */

@@ -23,7 +23,6 @@ import java.util.Set;
 /**
  * 实验组资源加载器
  *
- * @author chengzhengZhou
  * @date 2023/10/26 23:47
  * @since 1.0.0
  */

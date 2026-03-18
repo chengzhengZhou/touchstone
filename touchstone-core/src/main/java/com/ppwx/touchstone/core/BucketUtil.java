@@ -26,7 +26,6 @@ import java.util.*;
  * 分桶工具
  * 提供了分桶打散、分桶指派等算法
  *
- * @author chengzhengZhou
  * @date 2023/10/27 16:58
  * @since 1.0.0
  */

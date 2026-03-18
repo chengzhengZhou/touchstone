@@ -31,7 +31,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * BaseSelector测试类
  *
- * @author chengzhengZhou
  * @date 2023/10/27 14:24
  * @since 1.0.0
  */

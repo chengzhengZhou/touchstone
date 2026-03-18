@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
  *
  * 分组实验计划配置实现
  *
- * @author chengzhengZhou
  * @date 2023/10/26 16:10
  * @since 1.0.0
  */

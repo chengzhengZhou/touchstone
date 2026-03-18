@@ -28,7 +28,6 @@ import static com.ppwx.touchstone.core.BucketUtil.MAPPING_RANGE;
  * 分桶分流操作实现
  * 内部会维护某项实验的所有分组信息，并完成分组指派判断等功能
  *
- * @author chengzhengZhou
  * @date 2023/10/26 15:37
  * @since 1.0.0
  */

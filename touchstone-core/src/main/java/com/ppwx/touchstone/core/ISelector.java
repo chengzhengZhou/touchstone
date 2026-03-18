@@ -21,7 +21,6 @@ package com.ppwx.touchstone.core;
  * 分桶分流操作接口
  * 一般定义一项分流计划时需要设置好对应的组及相关比例，后续请求时会根据特定key固定落到某个桶中
  *
- * @author chengzhengZhou
  * @date 2023/10/26 13:58
  * @since 1.0.0
  */

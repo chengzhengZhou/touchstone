@@ -29,7 +29,6 @@ import java.util.Set;
  *
  * 从数据库中加载实验组配置
  *
- * @author chengzhengZhou
  * @date 2023/10/29 21:56
  * @since 1.0.0
  */

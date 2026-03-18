@@ -28,7 +28,6 @@ import java.util.Collections;
  *
  * GroupConfig测试类
  *
- * @author chengzhengZhou
  * @date 2023/10/30 17:11
  * @since 1.0.0
  */

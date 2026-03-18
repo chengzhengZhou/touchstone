@@ -34,7 +34,6 @@ import java.util.concurrent.TimeUnit;
  * 支持动态更新实验组配置的注册器
  *
  *
- * @author chengzhengZhou
  * @date 2023/10/31 14:04
  * @since 1.0.0
  */
