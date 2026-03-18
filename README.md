@@ -63,3 +63,7 @@ touchstone.namespaces=test
 # 配置刷新频率/秒
 touchstone.refresh-time=1
 ```
+
+## License
+
+Licensed under the Apache License, Version 2.0. See the `LICENSE` file.

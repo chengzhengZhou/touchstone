@@ -1,9 +1,19 @@
-/**
- * Copyright (C), 2010-2023, 爱回收
- * FileName: BucketUtil
- * Author:   Mikey(ext.ahs.zhouchzh1 @ jd.com)
- * Date:     2023/10/27 16:58
- * Description: 分桶工具
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright (c) 2023-2026 chengzhengZhou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.ppwx.touchstone.core;
 
@@ -16,7 +26,7 @@ import java.util.*;
  * 分桶工具
  * 提供了分桶打散、分桶指派等算法
  *
- * @author Mikey(ext.ahs.zhouchzh1 @ jd.com)
+ * @author chengzhengZhou
  * @date 2023/10/27 16:58
  * @since 1.0.0
  */
